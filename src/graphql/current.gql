@@ -1,0 +1,7 @@
+#import "./currentFragment.gql"
+
+query currentState {
+  current {
+    ...stateFrag
+  }
+}

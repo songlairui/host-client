@@ -1,0 +1,10 @@
+#import "../currentFragment.gql"
+
+mutation openTmux($name: String!, $force: Boolean, $n: String) {
+  openTmux(name: $name, force: $force, n: $n) {
+    success
+    state {
+      ...stateFrag
+    }
+  }
+}

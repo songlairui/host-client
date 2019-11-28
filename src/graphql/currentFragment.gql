@@ -1,0 +1,3 @@
+fragment stateFrag on CurrentState {
+  sessions
+}

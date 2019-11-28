@@ -1,7 +1,7 @@
 #import "../resultFrag.gql"
 
-mutation openTmux($name: String!, $force: Boolean, $n: String) {
-  result: openTmux(name: $name, force: $force, n: $n) {
+mutation openTmux($name: String!, $force: Boolean, $new: Boolean) {
+  result: openTmux(name: $name, force: $force, new: $new) {
     ...resultFrag
   }
 }

@@ -90,13 +90,13 @@ export default {
       }
       this.refetching = false;
     },
-    async openTmux(name, force, n) {
+    async openTmux(name, force, _new) {
       await this.$apollo.mutate({
         mutation: OPEN_TMUX,
         variables: {
           name,
           force,
-          n
+          new: _new
         },
         update: (store, { data: { result: current } }) => {
           store.writeQuery({

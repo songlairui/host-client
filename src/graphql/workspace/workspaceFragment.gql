@@ -1,0 +1,7 @@
+fragment WorkspaceFrag on Workspace {
+  id
+  folders {
+    name
+    path
+  }
+}

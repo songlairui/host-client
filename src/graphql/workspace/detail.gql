@@ -1,0 +1,7 @@
+#import "./workspaceFragment.gql"
+
+query workspace($id: ID!) {
+  workspace(id: $id) {
+    ...WorkspaceFrag
+  }
+}

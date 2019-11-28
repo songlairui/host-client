@@ -98,28 +98,25 @@ export default {
           force,
           n
         },
-        update: store => {
-          console.info(store);
-          // store.writeQuery({
-          //   query: FOLDER_CURRENT,
-          //   data: { folderCurrent: folderOpen }
-          // });
+        update: (store, { data: { result: current } }) => {
+          store.writeQuery({
+            query: CURRENT,
+            data: { current }
+          });
         }
       });
     },
     async killSession(name) {
-      console.info(name);
       await this.$apollo.mutate({
         mutation: KILL_TMUX,
         variables: {
           name
         },
-        update: store => {
-          console.info(store);
-          // store.writeQuery({
-          //   query: FOLDER_CURRENT,
-          //   data: { folderCurrent: folderOpen }
-          // });
+        update: (store, { data: { result: current } }) => {
+          store.writeQuery({
+            query: CURRENT,
+            data: { current }
+          });
         }
       });
     }

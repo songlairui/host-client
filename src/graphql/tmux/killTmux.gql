@@ -1,7 +1,7 @@
 #import "../resultFrag.gql"
 
 mutation killTmux($name: String!) {
-  killTmux(name: $name) {
+  result: killTmux(name: $name) {
     ...resultFrag
   }
 }

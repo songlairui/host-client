@@ -1,10 +1,7 @@
-#import "../currentFragment.gql"
+#import "../resultFrag.gql"
 
 mutation killTmux($name: String!) {
   killTmux(name: $name) {
-    success
-    state {
-      ...stateFrag
-    }
+    ...resultFrag
   }
 }

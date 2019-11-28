@@ -1,0 +1,6 @@
+fragment resultFrag on CmdResult {
+  success
+  state {
+    sessions
+  }
+}

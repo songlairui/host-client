@@ -1,7 +1,7 @@
-#import "./currentFragment.gql"
+#import "./resultFrag.gql"
 
 query currentState {
   current {
-    ...stateFrag
+    ...resultFrag
   }
 }

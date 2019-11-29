@@ -2,11 +2,16 @@
 
 FROM node:stretch-slim as build-stage
 WORKDIR /app
-COPY package.json yarn.lock ./
 RUN npm config set registry https://registry.npm.taobao.org/
 RUN yarn config set registry https://registry.npm.taobao.org/
+COPY package-docker-web.json ./package.json
+COPY yarn.lock ./
 RUN yarn
 COPY ./ .
+
+# 覆盖 package.json
+COPY package-docker-web.json ./package.json 
+
 RUN yarn build
 
 FROM nginx as production-stage

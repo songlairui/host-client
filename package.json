@@ -10,7 +10,8 @@
     "electron:serve": "vue-cli-service electron:serve",
     "postinstall": "electron-builder install-app-deps",
     "postuninstall": "electron-builder install-app-deps",
-    "gen:icon": "electron-icon-builder --input=./public/icon.png --output=build --flatten"
+    "gen:icon": "electron-icon-builder --input=./public/icon.png --output=build --flatten",
+    "build:docker": "docker build . -t host_web"
   },
   "main": "background.js",
   "dependencies": {

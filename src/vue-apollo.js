@@ -80,6 +80,7 @@ export function createProvider(options = {}) {
   apolloClient.wsClient = wsClient;
 
   async function resetApollo() {
+    // eslint-disable-next-line no-console
     console.log("[UI] Apollo store reset");
 
     try {
@@ -129,15 +130,19 @@ export function createProvider(options = {}) {
       }
     },
     errorHandler(error) {
+      // eslint-disable-next-line no-console
       console.log(
         "%cAn error occurred",
         "background: red; color: white; padding: 4px; border-radius: 4px;font-weight: bold;"
       );
+      // eslint-disable-next-line no-console
       console.log(error.message);
       if (error.graphQLErrors) {
+        // eslint-disable-next-line no-console
         console.log(error.graphQLErrors);
       }
       if (error.networkError) {
+        // eslint-disable-next-line no-console
         console.log(error.networkError);
       }
     }

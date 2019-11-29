@@ -2,7 +2,6 @@
   <div class="home">
     <div style="display: flex;padding-bottom: 1em">
       <h3 style="flex:1">Workspaces</h3>
-      <pre>{{current}}</pre>
       <VueButton
         class="icon-button big"
         icon-left="refresh"
@@ -22,22 +21,26 @@
             </div>
             <div style="flex:4"></div>
             <div class="actions" @click="(e)=>e.preventDefault()">
-              <Button_ class="primary" icon-left="code" @click="wait()">Editor</Button_>
-              <Divider type="vert" />
               <VueGroup class="inline">
+                <GroupButton_ class="accent" icon-left="code" @click="wait()">Editor</GroupButton_>
+                <VueDropdown v-if="(grouped[item.id] || []).length">
+                  <VueGroupButton slot="trigger" icon-right="more_vert" class="flat">Tmux</VueGroupButton>
+                  <VueDropdownButton
+                    v-for="suffix in (grouped[item.id] || [])"
+                    :key="suffix"
+                    class="danger"
+                    icon-left="stop"
+                    @click="killSession(suffix ? `${item.id}__${suffix}` : item.id)"
+                  >{{item.id}}:{{suffix}}</VueDropdownButton>
+                </VueDropdown>
                 <GroupButton_
+                  v-else
                   key="open"
                   :disabled="item.tmuxOn"
                   class="primary"
                   icon-left="view_compact"
                   @click="openTmux(item.id)"
                 >Tmux</GroupButton_>
-                <GroupButton_
-                  key="stop"
-                  class="danger icon-button"
-                  icon-right="stop"
-                  @click="killSession(item.id)"
-                />
                 <GroupButton_
                   key="new"
                   class="icon-button"
@@ -53,6 +56,7 @@
         </details>
       </li>
     </ul>
+    <pre>{{grouped}}</pre>
   </div>
 </template>
 
@@ -70,12 +74,31 @@ export default {
       subloading: false,
       workspaces: [],
       refetching: false,
-      current: {}
+      current: { state: {} }
     };
   },
   apollo: {
     workspaces: WORKSPACE_LIST,
     current: CURRENT
+  },
+  computed: {
+    grouped() {
+      const { sessions = [] } = this.current.state || {};
+      return sessions.reduce((result, item) => {
+        const lastIdx = item.lastIndexOf("__");
+        let name = item;
+        let suffix = "";
+        if (lastIdx > 0) {
+          name = item.slice(0, lastIdx);
+          suffix = item.slice(lastIdx + 2);
+        }
+        if (!result[name]) {
+          result[name] = [];
+        }
+        result[name].push(suffix);
+        return result;
+      }, {});
+    }
   },
   methods: {
     wait(time = 500) {

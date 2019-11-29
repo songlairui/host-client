@@ -15,7 +15,6 @@ export default {
       const old = on.click;
       on.click = async function(...args) {
         vm.loading = true;
-        await new Promise(r => setTimeout(r, 500));
         const result = await old.bind(this)(...args);
         vm.loading = false;
         return result;

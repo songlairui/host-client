@@ -51,16 +51,16 @@
                 @click="openTmux(item.id,false,true)"
               />
               <Divider type="vert" />
-              <Button_
-                secondary
-                class="accent icon-button"
-                icon-left="vsc"
-                @click="launchVsc(item.id)"
-              />
+              <Button_ class="accent icon-button" icon-left="vsc" @click="launchVsc(item.id)" />
             </div>
           </summary>
-          <ul>
-            <li v-for="(folder,i) in item.folders" :key="i">{{folder.name || ''}} {{folder.path}}</li>
+          <ul class="workspace-folders">
+            <li v-for="(folder,i) in item.folders" :key="i" class="workspace-folder">
+              <span class="folder-name">{{folder.name || ''}} {{folder.path}}</span>
+              <span class="actions">
+                <Button_ class="flat icon-button" icon-left="vsc" @click="launchVsc(folder.path)" />
+              </span>
+            </li>
           </ul>
         </details>
       </li>
@@ -224,5 +224,13 @@ export default {
   align-items: center;
   height: 100%;
   font-weight: bold;
+}
+
+.workspace-folder {
+  display: flex;
+
+  .folder-name {
+    flex: 1;
+  }
 }
 </style>

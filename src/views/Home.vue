@@ -10,8 +10,8 @@
         :tag="(current.state.sessions||[]).length"
       >sessions</Button_>
       <Button_
-        class="flat"
-        icon-left="refresh icon-button"
+        class="icon-button"
+        icon-left="refresh"
         @click="refresh"
         :tag="workspaces.length"
       />
@@ -197,6 +197,7 @@ export default {
   padding: 0em 10px;
   -webkit-user-select: none;
   -webkit-app-region: drag;
+  cursor move
 }
 
 .workspace-list {

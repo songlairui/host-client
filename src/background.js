@@ -21,13 +21,14 @@ function createWindow() {
   win = new BrowserWindow({
     width: 440,
     height: 660,
-    // frame: false,
-    titleBarStyle: "hidden",
+    frame: false,
+    // titleBarStyle: "hidden",
+    alwaysOnTop: true,
     webPreferences: {
       nodeIntegration: true
     }
   });
-  win.show()
+  // win.show();
 
   if (process.env.WEBPACK_DEV_SERVER_URL) {
     // Load the url of the dev server if in development mode

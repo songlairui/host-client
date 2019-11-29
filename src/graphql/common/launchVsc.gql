@@ -1,0 +1,3 @@
+mutation launchVsc($name: String!) {
+  launchVsc(name: $name)
+}

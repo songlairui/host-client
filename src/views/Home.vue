@@ -51,7 +51,12 @@
                 @click="openTmux(item.id,false,true)"
               />
               <Divider type="vert" />
-              <Button_ secondary class="accent icon-button" icon-left="vsc" @click="wait()" />
+              <Button_
+                secondary
+                class="accent icon-button"
+                icon-left="vsc"
+                @click="launchVsc(item.id)"
+              />
             </div>
           </summary>
           <ul>
@@ -68,6 +73,7 @@
 // @ is an alias to /src
 import CURRENT from "@/graphql/current.gql";
 import WORKSPACE_LIST from "@/graphql/workspace/list.gql";
+import LAUNCH_VSC from "@/graphql/common/launchVsc.gql";
 import OPEN_TMUX from "@/graphql/tmux/openTmux.gql";
 import KILL_TMUX from "@/graphql/tmux/killTmux.gql";
 
@@ -114,14 +120,22 @@ export default {
     wait(time = 500) {
       return new Promise(r => setTimeout(r, time));
     },
-    async refreshState() {
-      await this.$apollo.queries.current.refetch();
+    refreshState() {
+      return this.$apollo.queries.current.refetch();
     },
-    async refresh() {
-      await this.$apollo.queries.workspaces.refetch();
+    refresh() {
+      return this.$apollo.queries.workspaces.refetch();
     },
-    async openTmux(name, force, _new) {
-      await this.$apollo.mutate({
+    launchVsc(name) {
+      return this.$apollo.mutate({
+        mutation: LAUNCH_VSC,
+        variables: {
+          name
+        }
+      });
+    },
+    openTmux(name, force, _new) {
+      return this.$apollo.mutate({
         mutation: OPEN_TMUX,
         variables: {
           name,
@@ -137,8 +151,8 @@ export default {
         }
       });
     },
-    async killSession(name) {
-      await this.$apollo.mutate({
+    killSession(name) {
+      return this.$apollo.mutate({
         mutation: KILL_TMUX,
         variables: {
           name

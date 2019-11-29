@@ -4,7 +4,7 @@
       <VueButton class="flat icon-button" icon-left="zoom_out_map" @click="maxium" />
       <VueButton class="flat icon-button" icon-left="remove" @click="minize" />
       <VueButton class="flat icon-button" icon-left="home" to="/" />
-      <VueButton class="flat icon-button" icon-left="settings" to="/about" />
+      <VueButton class="flat icon-button" icon-left="settings" to="/settings" />
     </div>
     <router-view />
   </div>

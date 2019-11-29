@@ -9,12 +9,7 @@
         @click="refreshState"
         :tag="(current.state.sessions||[]).length"
       >sessions</Button_>
-      <Button_
-        class="icon-button"
-        icon-left="refresh"
-        @click="refresh"
-        :tag="workspaces.length"
-      />
+      <Button_ class="icon-button" icon-left="refresh" @click="refresh" :tag="workspaces.length" />
     </div>
     <ul class="workspace-list">
       <li v-for="(item,idx) in workspaces" :key="idx" class="item">
@@ -197,7 +192,7 @@ export default {
   padding: 0em 10px;
   -webkit-user-select: none;
   -webkit-app-region: drag;
-  cursor move
+  cursor: move;
 }
 
 .workspace-list {
@@ -244,6 +239,7 @@ export default {
 
   .folder-name {
     flex: 1;
+    word-break: break-all;
   }
 }
 </style>

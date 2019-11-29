@@ -1,5 +1,8 @@
 <template>
   <div class="about">
-    <h1>This is an about page</h1>
+    <h1>TODO</h1>
+    <ul>
+      <li>WAITING</li>
+    </ul>
   </div>
 </template>

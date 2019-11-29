@@ -2,15 +2,19 @@
   <div class="home">
     <div class="workspace-title">
       <h3 style="flex:1">Workspaces</h3>
-      <Button_ class="flat" icon-left="refresh" secondary @click="refreshState">state</Button_>
-      <Divider type="vert" />
       <Button_
         class="flat"
         icon-left="refresh"
         secondary
+        @click="refreshState"
+        :tag="(current.state.sessions||[]).length"
+      >sessions</Button_>
+      <Button_
+        class="flat"
+        icon-left="refresh icon-button"
         @click="refresh"
         :tag="workspaces.length"
-      >workspace</Button_>
+      />
     </div>
     <ul class="workspace-list">
       <li v-for="(item,idx) in workspaces" :key="idx" class="item">
@@ -174,6 +178,12 @@ export default {
   }
 };
 </script>
+<style lang="stylus">
+.wm-move {
+  -webkit-user-select: none;
+  -webkit-app-region: drag;
+}
+</style>
 <style lang="stylus" scoped>
 .home {
   display: flex;
@@ -185,6 +195,8 @@ export default {
   flex: 0 0 auto;
   display: flex;
   padding: 0em 10px;
+  -webkit-user-select: none;
+  -webkit-app-region: drag;
 }
 
 .workspace-list {

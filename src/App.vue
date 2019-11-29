@@ -28,8 +28,12 @@ html, body, #app {
   }
 
   #nav {
-    text-align: center;
+    text-align: right;
     flex: 0 0 auto;
+    -webkit-user-select: none;
+    -webkit-app-region: drag;
+    padding: .3em 2em 0 0;
+    cursor: move;
   }
 }
 

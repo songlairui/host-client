@@ -4,7 +4,10 @@
 <script>
 export default {
   props: {
-    type: String
+    type: {
+      type: String,
+      default: "hori"
+    }
   }
 };
 </script>
@@ -13,6 +16,12 @@ export default {
   &.vert {
     display: inline-block;
     min-width: 0.5em;
+  }
+
+  &.hori {
+    display: block;
+    min-width: 1px;
+    min-height: 0.8em;
   }
 }
 </style>

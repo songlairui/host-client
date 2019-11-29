@@ -24,6 +24,7 @@ function createWindow() {
     frame: false,
     // titleBarStyle: "hidden",
     alwaysOnTop: true,
+    icon: path.join(__static, 'icon.png'),
     webPreferences: {
       nodeIntegration: true
     }

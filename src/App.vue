@@ -1,5 +1,6 @@
 <template>
   <div id="app">
+    <ConnectionStatus id="c_status" />
     <div id="nav">
       <VueButton class="flat icon-button" icon-left="zoom_out_map" @click="maxium" />
       <VueButton class="flat icon-button" icon-left="remove" @click="minize" />
@@ -41,9 +42,12 @@ html, body, #app {
     overflow: auto;
   }
 
+  #nav, #c_status {
+    flex: 0 0 auto;
+  }
+
   #nav {
     text-align: right;
-    flex: 0 0 auto;
     -webkit-user-select: none;
     -webkit-app-region: drag;
     padding: 0.3em 2em 0 0;

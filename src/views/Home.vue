@@ -2,13 +2,15 @@
   <div class="home">
     <div style="display: flex;padding-bottom: 1em">
       <h3 style="flex:1">Workspaces</h3>
-      <VueButton
-        class="icon-button big"
+      <Button_ class="flat" icon-left="refresh" secondary @click="refreshState">state</Button_>
+      <Divider type="vert" />
+      <Button_
+        class="flat"
         icon-left="refresh"
-        :loading-secondary="refetching"
+        secondary
         @click="refresh"
         :tag="workspaces.length"
-      ></VueButton>
+      >workspace</Button_>
     </div>
     <ul>
       <li v-for="(item,idx) in workspaces" :key="idx" class="item">
@@ -21,36 +23,35 @@
             </div>
             <div style="flex:4"></div>
             <div class="actions" @click="(e)=>e.preventDefault()">
-              <Button_ secondary class="accent" icon-left="code" @click="wait()">Editor</Button_>
-              <Divider type="vert" />
-              <VueGroup
-                class="inline"
-                :value="choice"
-                indicator
-                v-if="(grouped[item.id] || []).length"
-              >
-                <GroupButton_
-                  v-for="suffix in (grouped[item.id] || [])"
-                  :key="suffix"
-                  class="danger round"
-                  @click="killWithSuffix(item.id,suffix)"
-                >{{suffix}}</GroupButton_>
-              </VueGroup>
-              <Button_
-                v-else
-                key="open"
-                :disabled="item.tmuxOn"
-                class="primary"
-                icon-left="view_compact"
-                @click="openTmux(item.id)"
-              >Tmux</Button_>
-              <Divider type="vert" />
+              <template v-if="(grouped[item.id] || []).length">
+                <template v-for="suffix in (grouped[item.id] || [])">
+                  <Button_
+                    :key="suffix"
+                    class="danger round"
+                    icon-right="close"
+                    @click="killWithSuffix(item.id,suffix)"
+                  >{{suffix || '·'}}</Button_>
+                  <Divider :key="`${suffix}_`" type="vert" />
+                </template>
+              </template>
+              <template v-else>
+                <Button_
+                  key="open"
+                  :disabled="item.tmuxOn"
+                  class="primary"
+                  icon-left="view_compact"
+                  @click="openTmux(item.id)"
+                >Tmux</Button_>
+                <Divider type="vert" />
+              </template>
               <Button_
                 key="new"
                 class="icon-button primary"
                 icon-right="fiber_new"
                 @click="openTmux(item.id,false,true)"
               />
+              <Divider type="vert" />
+              <Button_ secondary class="accent icon-button" icon-left="vsc" @click="wait()" />
             </div>
           </summary>
           <ul>
@@ -83,7 +84,12 @@ export default {
   },
   apollo: {
     workspaces: WORKSPACE_LIST,
-    current: CURRENT
+    current: {
+      query: CURRENT,
+      variables: {
+        force: true
+      }
+    }
   },
   computed: {
     grouped() {
@@ -108,14 +114,11 @@ export default {
     wait(time = 500) {
       return new Promise(r => setTimeout(r, time));
     },
+    async refreshState() {
+      await this.$apollo.queries.current.refetch();
+    },
     async refresh() {
-      this.refetching = true;
-      try {
-        await this.$apollo.queries.workspaces.refetch();
-      } catch (error) {
-        //
-      }
-      this.refetching = false;
+      await this.$apollo.queries.workspaces.refetch();
     },
     async openTmux(name, force, _new) {
       await this.$apollo.mutate({
@@ -128,6 +131,7 @@ export default {
         update: (store, { data: { result: current } }) => {
           store.writeQuery({
             query: CURRENT,
+            variables: { force: true },
             data: { current }
           });
         }
@@ -142,6 +146,7 @@ export default {
         update: (store, { data: { result: current } }) => {
           store.writeQuery({
             query: CURRENT,
+            variables: { force: true },
             data: { current }
           });
         }

@@ -1,7 +1,7 @@
 #import "./resultFrag.gql"
 
-query currentState {
-  current {
+query currentState($force: Boolean) {
+  current(force: $force) {
     ...resultFrag
   }
 }

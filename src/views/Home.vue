@@ -21,33 +21,36 @@
             </div>
             <div style="flex:4"></div>
             <div class="actions" @click="(e)=>e.preventDefault()">
-              <VueGroup class="inline">
-                <GroupButton_ class="accent" icon-left="code" @click="wait()">Editor</GroupButton_>
-                <VueDropdown v-if="(grouped[item.id] || []).length">
-                  <VueGroupButton slot="trigger" icon-right="more_vert" class="flat">Tmux</VueGroupButton>
-                  <VueDropdownButton
-                    v-for="suffix in (grouped[item.id] || [])"
-                    :key="suffix"
-                    class="danger"
-                    icon-left="stop"
-                    @click="killSession(suffix ? `${item.id}__${suffix}` : item.id)"
-                  >{{item.id}}:{{suffix}}</VueDropdownButton>
-                </VueDropdown>
+              <Button_ secondary class="accent" icon-left="code" @click="wait()">Editor</Button_>
+              <Divider type="vert" />
+              <VueGroup
+                class="inline"
+                :value="choice"
+                indicator
+                v-if="(grouped[item.id] || []).length"
+              >
                 <GroupButton_
-                  v-else
-                  key="open"
-                  :disabled="item.tmuxOn"
-                  class="primary"
-                  icon-left="view_compact"
-                  @click="openTmux(item.id)"
-                >Tmux</GroupButton_>
-                <GroupButton_
-                  key="new"
-                  class="icon-button"
-                  icon-right="fiber_new"
-                  @click="openTmux(item.id,false,true)"
-                />
+                  v-for="suffix in (grouped[item.id] || [])"
+                  :key="suffix"
+                  class="danger round"
+                  @click="killWithSuffix(item.id,suffix)"
+                >{{suffix}}</GroupButton_>
               </VueGroup>
+              <Button_
+                v-else
+                key="open"
+                :disabled="item.tmuxOn"
+                class="primary"
+                icon-left="view_compact"
+                @click="openTmux(item.id)"
+              >Tmux</Button_>
+              <Divider type="vert" />
+              <Button_
+                key="new"
+                class="icon-button primary"
+                icon-right="fiber_new"
+                @click="openTmux(item.id,false,true)"
+              />
             </div>
           </summary>
           <ul>
@@ -74,7 +77,8 @@ export default {
       subloading: false,
       workspaces: [],
       refetching: false,
-      current: { state: {} }
+      current: { state: {} },
+      choice: "" // 高亮
     };
   },
   apollo: {
@@ -142,6 +146,12 @@ export default {
           });
         }
       });
+    },
+    killWithSuffix(name, suffix) {
+      if (suffix) {
+        name = `${name}__${suffix}`;
+      }
+      return this.killSession(name);
     }
   }
 };

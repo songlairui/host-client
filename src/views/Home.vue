@@ -1,6 +1,6 @@
 <template>
   <div class="home">
-    <div style="display: flex;padding-bottom: 1em">
+    <div class="workspace-title">
       <h3 style="flex:1">Workspaces</h3>
       <Button_ class="flat" icon-left="refresh" secondary @click="refreshState">state</Button_>
       <Divider type="vert" />
@@ -12,7 +12,7 @@
         :tag="workspaces.length"
       >workspace</Button_>
     </div>
-    <ul>
+    <ul class="workspace-list">
       <li v-for="(item,idx) in workspaces" :key="idx" class="item">
         <details open>
           <summary class="item-header">
@@ -65,7 +65,6 @@
         </details>
       </li>
     </ul>
-    <pre>{{grouped}}</pre>
   </div>
 </template>
 
@@ -177,7 +176,22 @@ export default {
 </script>
 <style lang="stylus" scoped>
 .home {
-  padding: 0.5em;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.workspace-title {
+  flex: 0 0 auto;
+  display: flex;
+  padding: 0em 10px;
+}
+
+.workspace-list {
+  padding: 1em 10px 0em;
+  flex: 1;
+  overflow: auto;
+  margin: 0;
 }
 
 .item {

@@ -9,11 +9,28 @@
 </template>
 
 <style lang="stylus">
+html, body, #app {
+  height: 100%;
+}
+
 #app {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   color: #2c3e50;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+
+  >div {
+    flex: 1;
+    overflow: auto;
+  }
+
+  #nav {
+    text-align: center;
+    flex: 0 0 auto;
+  }
 }
 
 ul, li, ol {

@@ -24,12 +24,20 @@
             <div class="actions" @click="(e)=>e.preventDefault()">
               <template v-if="(grouped[item.id] || []).length">
                 <template v-for="suffix in (grouped[item.id] || [])">
-                  <Button_
-                    :key="suffix"
-                    class="danger round"
-                    icon-right="close"
-                    @click="killWithSuffix(item.id,suffix)"
-                  >{{suffix || '·'}}</Button_>
+                  <VueDropdown :key="suffix" :label="suffix || '·'" button-class="warning">
+                    <div class="vue-ui-grid default-gap col-1">
+                      <VueDropdownButton
+                        class="danger"
+                        @click="killWithSuffix(item.id,suffix)"
+                        icon-left="close"
+                      >关闭</VueDropdownButton>
+                      <VueDropdownButton
+                        v-tooltip="`TODO`"
+                        class="info"
+                        icon-left="open_in_browser"
+                      >Attach</VueDropdownButton>
+                    </div>
+                  </VueDropdown>
                   <Divider :key="`${suffix}_`" type="vert" />
                 </template>
               </template>
